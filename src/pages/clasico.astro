@@ -1,0 +1,185 @@
+---
+import Layout from "../layouts/Layout.astro";
+import operadores from "../data/operators.json";
+---
+
+<Layout title="R6SDLE - Clásico">
+  <h1>Modo Clásico</h1>
+  <p>Adivina el operador de hoy. Cada intento te da pistas.</p>
+
+  <div class="buscador">
+    <input
+      id="entrada"
+      type="text"
+      placeholder="Escribe el nombre del operador..."
+      autocomplete="off"
+    />
+    <ul id="sugerencias" hidden></ul>
+  </div>
+
+  <p id="mensaje" class="mensaje"></p>
+
+  <div class="tabla-scroll">
+    <table id="tabla" hidden>
+      <thead>
+        <tr>
+          <th>Operador</th>
+          <th>Bando</th>
+          <th>Unidad</th>
+          <th>País</th>
+          <th>Año</th>
+          <th>Velocidad</th>
+          <th>Salud</th>
+        </tr>
+      </thead>
+      <tbody id="cuerpo"></tbody>
+    </table>
+  </div>
+
+  <div id="victoria" class="victoria" hidden></div>
+
+  <!-- Pasamos el JSON al script del navegador -->
+  <script id="datos" type="application/json" set:html={JSON.stringify(operadores)} />
+</Layout>
+
+<script>
+  import { getDailyIndex } from "../lib/daily";
+  import { comparar, type Operador } from "../lib/compare";
+  import { cargarProgreso, guardarProgreso, registrarVictoria, cargarStats } from "../lib/storage";
+
+  const MODO = "clasico";
+  const operadores: Operador[] = JSON.parse(
+    document.getElementById("datos")!.textContent!
+  );
+  const objetivo = operadores[getDailyIndex(operadores.length, 1)];
+
+  const entrada = document.getElementById("entrada") as HTMLInputElement;
+  const lista = document.getElementById("sugerencias") as HTMLUListElement;
+  const tabla = document.getElementById("tabla") as HTMLTableElement;
+  const cuerpo = document.getElementById("cuerpo") as HTMLTableSectionElement;
+  const mensaje = document.getElementById("mensaje") as HTMLParagraphElement;
+  const victoria = document.getElementById("victoria") as HTMLDivElement;
+
+  const progreso = cargarProgreso(MODO);
+
+  const FLECHA = { mayor: "↑", menor: "↓", correcto: "", incorrecto: "" };
+
+  function pintarFila(op: Operador) {
+    const pistas = comparar(op, objetivo);
+    const tr = document.createElement("tr");
+
+    const tdNombre = document.createElement("td");
+    tdNombre.textContent = op.nombre;
+    tr.appendChild(tdNombre);
+
+    for (const p of pistas) {
+      const td = document.createElement("td");
+      td.className = p.estado === "correcto" ? "ok" : p.estado === "incorrecto" ? "mal" : "num";
+      td.textContent = `${p.valor} ${FLECHA[p.estado]}`.trim();
+      tr.appendChild(td);
+    }
+
+    cuerpo.prepend(tr); // el intento más reciente arriba
+    tabla.hidden = false;
+  }
+
+  function mostrarVictoria() {
+    entrada.disabled = true;
+    const stats = cargarStats(MODO);
+    victoria.hidden = false;
+    victoria.innerHTML = `
+      <h2>¡GG! Era ${objetivo.nombre}</h2>
+      <p>Intentos: ${progreso.guesses.length}</p>
+      <p>Racha actual: ${stats.racha} · Mejor racha: ${stats.mejorRacha}</p>
+    `;
+  }
+
+  function intentar(op: Operador) {
+    if (progreso.won) return;
+    if (progreso.guesses.includes(op.id)) {
+      mensaje.textContent = "Ya intentaste con ese operador.";
+      return;
+    }
+    mensaje.textContent = "";
+    progreso.guesses.push(op.id);
+    pintarFila(op);
+
+    if (op.id === objetivo.id) {
+      progreso.won = true;
+      registrarVictoria(MODO);
+      mostrarVictoria();
+    }
+    guardarProgreso(MODO, progreso);
+    entrada.value = "";
+    lista.hidden = true;
+  }
+
+  // Autocompletado
+  entrada.addEventListener("input", () => {
+    const texto = entrada.value.trim().toLowerCase();
+    lista.innerHTML = "";
+    if (!texto) { lista.hidden = true; return; }
+
+    const coincidencias = operadores
+      .filter((o) => o.nombre.toLowerCase().includes(texto))
+      .filter((o) => !progreso.guesses.includes(o.id))
+      .slice(0, 6);
+
+    for (const op of coincidencias) {
+      const li = document.createElement("li");
+      li.textContent = op.nombre;
+      li.addEventListener("click", () => intentar(op));
+      lista.appendChild(li);
+    }
+    lista.hidden = coincidencias.length === 0;
+  });
+
+  // Enter = elegir la primera sugerencia
+  entrada.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      const primera = lista.querySelector("li");
+      if (primera) (primera as HTMLLIElement).click();
+    }
+  });
+
+  // Restaurar partida guardada de hoy
+  for (const id of progreso.guesses) {
+    const op = operadores.find((o) => o.id === id);
+    if (op) pintarFila(op);
+  }
+  if (progreso.won) mostrarVictoria();
+</script>
+
+<style>
+  .buscador { position: relative; max-width: 420px; margin: 1.5rem 0 0.5rem; }
+  input {
+    width: 100%; padding: 0.8rem 1rem;
+    background: var(--panel); color: var(--texto);
+    border: 1px solid var(--borde); border-radius: 6px; font-size: 1rem;
+  }
+  input:focus { outline: 2px solid var(--naranja); }
+  #sugerencias {
+    position: absolute; left: 0; right: 0; z-index: 10;
+    margin: 4px 0 0; padding: 0; list-style: none;
+    background: var(--panel); border: 1px solid var(--borde); border-radius: 6px;
+  }
+  #sugerencias li { padding: 0.7rem 1rem; cursor: pointer; }
+  #sugerencias li:hover { background: var(--borde); color: var(--naranja); }
+
+  .mensaje { color: var(--amarillo); min-height: 1.4rem; }
+  .tabla-scroll { overflow-x: auto; }
+  table { border-collapse: separate; border-spacing: 6px; width: 100%; }
+  th { font-size: 0.8rem; color: #9aa3b2; text-transform: uppercase; }
+  td {
+    text-align: center; padding: 0.9rem 0.5rem; border-radius: 6px;
+    background: var(--panel); border: 1px solid var(--borde); font-weight: 600;
+  }
+  td.ok { background: #12402b; border-color: var(--verde); }
+  td.mal { background: #4a1a24; border-color: var(--rojo); }
+  td.num { background: #4a3a0f; border-color: var(--amarillo); }
+
+  .victoria {
+    margin-top: 1.5rem; padding: 1.5rem; text-align: center;
+    background: var(--panel); border: 2px solid var(--naranja); border-radius: 8px;
+  }
+</style>
