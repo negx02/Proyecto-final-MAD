@@ -1,0 +1,83 @@
+---
+interface Props {
+  title?: string;
+}
+const { title = "R6SDLE" } = Astro.props;
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <header>
+      <a href="/" class="logo">R6SDLE</a>
+      <nav>
+        <a href="/clasico">Clásico</a>
+        <a href="/silueta">Silueta</a>
+        <a href="/frase">Frase</a>
+        <a href="/emoji">Emoji</a>
+      </nav>
+    </header>
+
+    <main>
+      <slot />
+    </main>
+
+    <footer>
+      <p>Proyecto escolar sin fines de lucro. Rainbow Six Siege es propiedad de Ubisoft.</p>
+    </footer>
+  </body>
+</html>
+
+<style is:global>
+  :root {
+    --bg: #0e1116;
+    --panel: #171b22;
+    --borde: #2a303a;
+    --texto: #e6e8eb;
+    --naranja: #ff9d00;
+    --verde: #1fb36b;
+    --rojo: #d6334a;
+    --amarillo: #e0b020;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--texto);
+    font-family: system-ui, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    background: var(--panel);
+    border-bottom: 2px solid var(--naranja);
+  }
+
+  .logo {
+    color: var(--naranja);
+    font-weight: 800;
+    font-size: 1.3rem;
+    text-decoration: none;
+  }
+
+  nav { display: flex; gap: 1.2rem; }
+  nav a { color: var(--texto); text-decoration: none; }
+  nav a:hover { color: var(--naranja); }
+
+  main { flex: 1; padding: 2rem 1.5rem; max-width: 900px; margin: 0 auto; width: 100%; }
+
+  footer { text-align: center; padding: 1rem; color: #7b8494; font-size: 0.85rem; }
+</style>

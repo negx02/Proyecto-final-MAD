@@ -1,0 +1,82 @@
+[
+  {
+    "id": "thermite",
+    "nombre": "Thermite",
+    "bando": "Atacante",
+    "anio": 2015,
+    "unidad": "FBI SWAT",
+    "pais": "EE.UU.",
+    "velocidad": 2,
+    "salud": 2
+  },
+  {
+    "id": "sledge",
+    "nombre": "Sledge",
+    "bando": "Atacante",
+    "anio": 2015,
+    "unidad": "SAS",
+    "pais": "Reino Unido",
+    "velocidad": 2,
+    "salud": 3
+  },
+  {
+    "id": "thatcher",
+    "nombre": "Thatcher",
+    "bando": "Atacante",
+    "anio": 2015,
+    "unidad": "SAS",
+    "pais": "Reino Unido",
+    "velocidad": 2,
+    "salud": 2
+  },
+  {
+    "id": "smoke",
+    "nombre": "Smoke",
+    "bando": "Defensor",
+    "anio": 2015,
+    "unidad": "SAS",
+    "pais": "Reino Unido",
+    "velocidad": 2,
+    "salud": 2
+  },
+  {
+    "id": "jager",
+    "nombre": "Jäger",
+    "bando": "Defensor",
+    "anio": 2015,
+    "unidad": "GSG 9",
+    "pais": "Alemania",
+    "velocidad": 2,
+    "salud": 2
+  },
+  {
+    "id": "mute",
+    "nombre": "Mute",
+    "bando": "Defensor",
+    "anio": 2015,
+    "unidad": "SAS",
+    "pais": "Reino Unido",
+    "velocidad": 2,
+    "salud": 2
+  },
+  {
+    "id": "ash",
+    "nombre": "Ash",
+    "bando": "Atacante",
+    "anio": 2016,
+    "unidad": "FBI SWAT",
+    "pais": "EE.UU.",
+    "velocidad": 3,
+    "salud": 1
+  },
+  {
+    "id": "bandit",
+    "nombre": "Bandit",
+    "bando": "Defensor",
+    "anio": 2016,
+    "unidad": "GSG 9",
+    "pais": "Alemania",
+    "velocidad": 3,
+    "salud": 1
+  }
+]
