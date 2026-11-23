@@ -1,7 +1,12 @@
 ---
 ---
 
-<header class="header"></header>
+<header class="header">
+  <div class="header__contenido">
+    <div class="header__marca"></div>
+    <div class="header__navegacion"></div>
+  </div>
+</header>
 
 <style>
   .header {
@@ -9,5 +14,29 @@
     height: 64px;
     background-color: var(--color-fondo-alt);
     border-bottom: var(--borde-fino);
+  }
+
+  .header__contenido {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--espacio-6);
+    width: 100%;
+    max-width: var(--ancho-maximo);
+    height: 100%;
+    margin-inline: auto;
+    padding-inline: var(--espacio-6);
+  }
+
+  .header__marca {
+    display: flex;
+    align-items: center;
+    gap: var(--espacio-3);
+  }
+
+  .header__navegacion {
+    display: flex;
+    align-items: center;
+    gap: var(--espacio-6);
   }
 </style>
