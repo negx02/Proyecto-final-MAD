@@ -1,13 +1,41 @@
 ---
 ---
 
-<section class="hero"></section>
+<section class="hero">
+  <div class="hero__insignia"></div>
+  <div class="hero__titulo"></div>
+  <div class="hero__subtitulo"></div>
+  <div class="hero__indicadores"></div>
+</section>
 
 <style>
   .hero {
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: var(--espacio-4);
     width: 100%;
+    padding-block: var(--espacio-8);
+    text-align: center;
+  }
+
+  .hero__insignia {
+    min-height: 28px;
+  }
+
+  .hero__titulo {
+    min-height: 72px;
+  }
+
+  .hero__subtitulo {
+    min-height: 24px;
+  }
+
+  .hero__indicadores {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--espacio-4);
+    min-height: 36px;
   }
 </style>
