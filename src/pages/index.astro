@@ -3,9 +3,31 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
 <BaseLayout title="R6SDLE | Menú principal">
-  <main class="contenedor">
-    <p class="etiqueta-mono">Vista 1 · Menú principal</p>
-    <h1>R6SDLE</h1>
-    <a href="/clasico">Ir al modo clásico</a>
+  <main class="principal">
+    <section class="principal__hero"></section>
+    <section class="principal__tarjetas"></section>
   </main>
 </BaseLayout>
+
+<style>
+  .principal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--espacio-8);
+    width: 100%;
+    max-width: var(--ancho-maximo);
+    margin-inline: auto;
+    padding-block: var(--espacio-8);
+    padding-inline: var(--espacio-6);
+  }
+
+  .principal__hero {
+    width: 100%;
+    min-height: 240px;
+  }
+
+  .principal__tarjetas {
+    width: 100%;
+  }
+</style>
