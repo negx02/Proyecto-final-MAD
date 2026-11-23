@@ -1,0 +1,52 @@
+---
+---
+
+<footer class="footer">
+  <div class="footer__contenido">
+    <div class="footer__estado"></div>
+    <div class="footer__enlaces"></div>
+    <div class="footer__legal"></div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    width: 100%;
+    background-color: var(--color-fondo-alt);
+    border-top: var(--borde-fino);
+  }
+
+  .footer__contenido {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--espacio-6);
+    width: 100%;
+    max-width: var(--ancho-maximo);
+    min-height: 44px;
+    margin-inline: auto;
+    padding-inline: var(--espacio-6);
+  }
+
+  .footer__estado,
+  .footer__enlaces,
+  .footer__legal {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    gap: var(--espacio-3);
+    min-height: 20px;
+    font-family: var(--fuente-mono);
+    font-size: var(--texto-xs);
+    letter-spacing: 0.08em;
+    color: var(--color-texto-tenue);
+  }
+
+  .footer__enlaces {
+    justify-content: center;
+  }
+
+  .footer__legal {
+    justify-content: flex-end;
+  }
+</style>
