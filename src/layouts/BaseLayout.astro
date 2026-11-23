@@ -1,4 +1,5 @@
 ---
+import Header from '../components/Header.astro';
 import '../styles/global.css';
 
 const { title, descripcion = 'Adivina los operadores de Rainbow Six Siege.' } = Astro.props;
@@ -20,6 +21,7 @@ const { title, descripcion = 'Adivina los operadores de Rainbow Six Siege.' } = 
     <title>{title}</title>
   </head>
   <body>
+    <Header />
     <slot />
   </body>
 </html>
