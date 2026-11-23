@@ -5,7 +5,16 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 <BaseLayout title="R6SDLE | Menú principal">
   <main class="principal">
     <section class="principal__hero"></section>
-    <section class="principal__tarjetas"></section>
+
+    <section class="principal__tarjetas">
+      <div class="principal__cuadricula">
+        <div class="principal__operador"></div>
+        <div class="principal__modo"></div>
+        <div class="principal__operador"></div>
+      </div>
+
+      <div class="principal__botones"></div>
+    </section>
   </main>
 </BaseLayout>
 
@@ -29,5 +38,30 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
   .principal__tarjetas {
     width: 100%;
+  }
+
+  .principal__cuadricula {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    align-items: center;
+    gap: var(--espacio-6);
+    width: 100%;
+  }
+
+  .principal__operador {
+    min-height: 320px;
+  }
+
+  .principal__modo {
+    min-height: 170px;
+  }
+
+  .principal__botones {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--espacio-4);
+    min-height: 48px;
+    margin-top: var(--espacio-8);
   }
 </style>
