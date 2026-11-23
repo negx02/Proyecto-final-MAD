@@ -1,10 +1,11 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
 ---
 
 <BaseLayout title="R6SDLE | Menú principal">
   <main class="principal">
-    <section class="principal__hero"></section>
+    <Hero />
 
     <section class="principal__tarjetas">
       <div class="principal__cuadricula">
@@ -31,11 +32,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     margin-inline: auto;
     padding-block: var(--espacio-8);
     padding-inline: var(--espacio-6);
-  }
-
-  .principal__hero {
-    width: 100%;
-    min-height: 220px;
   }
 
   .principal__tarjetas {
