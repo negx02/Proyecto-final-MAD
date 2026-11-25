@@ -1,9 +1,29 @@
 ---
+const enlaces = [
+  { texto: 'Inicio', href: '/' },
+  { texto: 'Jugar', href: '/clasico' },
+];
+
+
+const rutaActual = Astro.url.pathname.replace(/\/$/, '') || '/';
 ---
 
 <nav class="nav">
-  <ul class="nav__lista"></ul>
-</nav>
+<ul class="nav__lista">
+  {
+    enlaces.map((enlace) => (
+      <li>
+        <a
+          class="nav__enlace"
+          href={enlace.href}
+          aria-current={rutaActual === enlace.href ? 'page' : undefined}
+        >
+          {enlace.texto}
+        </a>
+      </li>
+    ))
+  }
+</ul></nav>
 
 <style>
   .nav {
@@ -21,5 +41,22 @@
     letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--color-texto-suave);
+  }
+
+    /* HU-07: enlaces */
+  .nav__enlace {
+    padding: var(--espacio-1) var(--espacio-2);
+    color: var(--color-texto-suave);
+    border-bottom: 2px solid transparent;
+    transition: color 0.15s ease, border-color 0.15s ease;
+  }
+
+  .nav__enlace:hover {
+    color: var(--color-naranja);
+  }
+
+  .nav__enlace[aria-current='page'] {
+    color: var(--color-naranja);
+    border-bottom-color: var(--color-naranja);
   }
 </style>
