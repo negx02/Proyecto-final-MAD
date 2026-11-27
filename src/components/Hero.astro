@@ -1,13 +1,71 @@
 ---
+// HU-10 · Hero (Vista 1): insignia, título, racha y cuenta regresiva
 ---
-
+ 
 <section class="hero">
-  <div class="hero__insignia"></div>
-  <div class="hero__titulo"></div>
-  <div class="hero__subtitulo"></div>
-  <div class="hero__indicadores"></div>
+  <div class="hero__insignia">
+    <span class="hero__punto" aria-hidden="true"></span>
+    <span class="etiqueta-mono" id="hero-insignia">Operativo diario // Temporada activa</span>
+  </div>
+ 
+  <h1 class="hero__titulo">R6SDLE</h1>
+ 
+  <p class="hero__subtitulo">Adivina los operadores de Rainbow Six Siege</p>
+ 
+  <div class="hero__indicadores">
+    <div class="hero__indicador">
+      <span class="hero__indicador-etiqueta etiqueta-mono">Racha global:</span>
+      <span class="hero__indicador-valor" id="hero-racha">0 operativos</span>
+    </div>
+ 
+    <div class="hero__indicador">
+      <span class="hero__indicador-etiqueta etiqueta-mono">Nuevo en:</span>
+      <span class="hero__indicador-valor hero__indicador-valor--mono" id="hero-cuenta">--:--:--</span>
+    </div>
+  </div>
 </section>
-
+ 
+<script>
+  import { numeroOperativo, cuentaRegresiva } from '../utils/diario.js';
+  import { leerRacha } from '../utils/racha.js';
+ 
+  const elementoInsignia = document.getElementById('hero-insignia');
+  const elementoRacha = document.getElementById('hero-racha');
+  const elementoCuenta = document.getElementById('hero-cuenta');
+ 
+  function pintarInsignia() {
+    if (!elementoInsignia) return;
+    elementoInsignia.textContent = `Operativo diario #${numeroOperativo()} // Temporada activa`;
+  }
+ 
+  function pintarRacha() {
+    if (!elementoRacha) return;
+    const racha = leerRacha();
+    elementoRacha.textContent = `${racha} ${racha === 1 ? 'operativo' : 'operativos'}`;
+  }
+ 
+  function pintarCuenta() {
+    if (!elementoCuenta) return;
+    elementoCuenta.textContent = cuentaRegresiva();
+  }
+ 
+  pintarInsignia();
+  pintarRacha();
+  pintarCuenta();
+ 
+  // Cada segundo se actualiza la cuenta; al llegar la medianoche cambia el operativo y la racha se revisa
+  let ultimoOperativo = numeroOperativo();
+  setInterval(() => {
+    pintarCuenta();
+    const actual = numeroOperativo();
+    if (actual !== ultimoOperativo) {
+      ultimoOperativo = actual;
+      pintarInsignia();
+      pintarRacha();
+    }
+  }, 1000);
+</script>
+ 
 <style>
   .hero {
     display: flex;
@@ -18,25 +76,76 @@
     padding-block: var(--espacio-6);
     text-align: center;
   }
-
+ 
   .hero__insignia {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--espacio-2);
     min-height: 28px;
+    padding: var(--espacio-1) var(--espacio-4);
+    background-color: var(--color-naranja-tenue);
+    border: 1px solid var(--color-naranja);
+    border-radius: 999px;
   }
-
+ 
+  .hero__insignia .etiqueta-mono {
+    color: var(--color-naranja);
+  }
+ 
+  .hero__punto {
+    width: 8px;
+    height: 8px;
+    background-color: var(--color-naranja);
+    border-radius: 50%;
+    box-shadow: var(--brillo-naranja);
+  }
+ 
   .hero__titulo {
     min-height: 84px;
+    font-size: var(--texto-3xl);
+    letter-spacing: 0.12em;
+    color: var(--color-naranja);
+    text-shadow: var(--brillo-naranja);
   }
-
+ 
   .hero__subtitulo {
     min-height: 24px;
+    font-size: var(--texto-lg);
+    color: var(--color-texto-suave);
   }
-
+ 
   .hero__indicadores {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: center;
     gap: var(--espacio-3);
     min-height: 36px;
     margin-top: var(--espacio-2);
   }
+ 
+  .hero__indicador {
+    display: flex;
+    align-items: center;
+    gap: var(--espacio-3);
+    padding: var(--espacio-2) var(--espacio-4);
+    background-color: var(--color-superficie);
+    border: var(--borde-fino);
+    border-radius: var(--radio);
+  }
+ 
+  .hero__indicador-valor {
+    font-family: var(--fuente-titulo);
+    font-size: var(--texto-lg);
+    font-weight: 700;
+    color: var(--color-texto);
+  }
+ 
+  .hero__indicador-valor--mono {
+    font-family: var(--fuente-mono);
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    color: var(--color-cian);
+  }
 </style>
+ 
