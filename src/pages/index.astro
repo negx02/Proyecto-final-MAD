@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
+import ModeCard from '../components/ModeCard.astro';
 ---
 
 <BaseLayout title="R6SDLE | Menú principal">
@@ -10,7 +11,9 @@ import Hero from '../components/Hero.astro';
     <section class="principal__tarjetas">
       <div class="principal__cuadricula">
         <div class="principal__operador"></div>
-        <div class="principal__modo"></div>
+        <div class="principal__modo">
+          <ModeCard href="/clasico" />
+        </div>
         <div class="principal__operador"></div>
       </div>
 
