@@ -4,7 +4,16 @@ import Nav from './Nav.astro';
 
 <header class="header">
   <div class="header__contenido">
-    <div class="header__marca"></div>
+    <div class="header__marca"><a href="/" class="marca-enlace" aria-label="R6SDLE, ir al menú principal">
+    <span class="marca-logo" aria-hidden="true">6</span>
+    <span class="marca-textos">
+      <span class="marca-fila">
+        <span class="marca-nombre">R6SDLE</span>
+        <span class="marca-etiqueta">Esports Intel</span>
+      </span>
+      <span class="marca-subtitulo">Tactical Intel v2.4</span>
+    </span>
+  </a></div>
     <div class="header__navegacion">
       <Nav />
     </div>
@@ -41,5 +50,72 @@ import Nav from './Nav.astro';
     display: flex;
     align-items: center;
     gap: var(--espacio-6);
+  }
+  /* HU-07: marca */
+  .marca-enlace {
+    display: flex;
+    align-items: center;
+    gap: var(--espacio-3);
+    color: var(--color-texto);
+  }
+
+  .marca-logo {
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    background-color: var(--color-naranja);
+    color: var(--color-fondo);
+    font-family: var(--fuente-titulo);
+    font-size: var(--texto-xl);
+    font-weight: 700;
+    border-radius: var(--radio);
+    transition: box-shadow 0.15s ease;
+  }
+
+  .marca-textos {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+  }
+
+  .marca-fila {
+    display: flex;
+    align-items: center;
+    gap: var(--espacio-2);
+  }
+
+  .marca-nombre {
+    font-family: var(--fuente-titulo);
+    font-size: var(--texto-lg);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    transition: color 0.15s ease;
+  }
+
+  .marca-etiqueta {
+    padding: 0 var(--espacio-2);
+    font-family: var(--fuente-mono);
+    font-size: var(--texto-xs);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-cian);
+    background-color: var(--color-cian-tenue);
+    border-radius: var(--radio);
+  }
+
+  .marca-subtitulo {
+    font-family: var(--fuente-mono);
+    font-size: var(--texto-xs);
+    letter-spacing: 0.1em;
+    color: var(--color-texto-tenue);
+  }
+
+  .marca-enlace:hover .marca-nombre {
+    color: var(--color-naranja);
+  }
+
+  .marca-enlace:hover .marca-logo {
+    box-shadow: var(--brillo-naranja);
   }
 </style>
